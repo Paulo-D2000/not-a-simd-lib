@@ -36,6 +36,8 @@ typedef struct simd_vfloat256_t {
 
 ## API Reference
 
+👉 You can link directly to [**`notasimdlib.h`**](notasimdlib.h) for the full source with inline docs.
+
 ### Macro Concatenation Utilities
 
 ```c
@@ -164,20 +166,24 @@ simd_t(float) z = simd_bin_op(add,float,x,y);
 ## Usage Example
 
 ```c
-#define XLEN 256
+#define XLEN 256 
 #include "notasimdlib.h"
 
+// Declare types
 decl_simd_t(float)
 decl_simd_t(int)
 
+// Declare custom binop's
 decl_simd_bin_op(add, float, +)
 decl_simd_bin_op(add, int, +)
 
+// Custom function for reduce...
 float dot_func(float accum, int idx, simd_t(float) a, simd_t(float) b) {
     return accum + (a.v[idx] * b.v[idx]);
 }
 
 int main() {
+    // Declaring types:
     simd_t(float) veca, vecb;
     simd_t(int) iveca, ivecb;
 
@@ -188,7 +194,7 @@ int main() {
     // Custom ops
     simd_t(float) vecc = simd_bin_op(add,float,veca,vecb);
 
-    // Dot product
+    // Example: Ways to implement the Dot Product operation
     float dot1 = simd_apply_dot(float, veca, vecb);
     float dot2 = simd_reduce_func(float, dot_func, veca, vecb);
     float dot3 = simd_reduce_expr(float, accum + (veca.v[i]*vecb.v[i]), veca, vecb);
@@ -207,4 +213,6 @@ int main() {
 
 ---
 
-👉 You can link directly to [**`notasimdlib.h`**](notasimdlib.h) for the full source with inline docs.
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
